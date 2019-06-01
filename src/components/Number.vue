@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-6 col-md-4 col-lg-1" @click="hit=true">
+  <div class="col col-sm-1 col-md-3 col-lg-1 col-xs-3" @click="hit=true">
     <div class="card card-default text-center" :class="{pushed:hit}">
       <div class="card-body number">
         <slot></slot>
