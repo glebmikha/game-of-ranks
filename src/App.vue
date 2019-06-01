@@ -4,6 +4,7 @@
     <question :qRank="3"></question>
     <number-grid :numbers="numbers"></number-grid>
     <average-error>14</average-error>
+    <error-detail></error-detail>
     <app-footer></app-footer>
   </div>
 </template>
@@ -14,13 +15,16 @@ import Footer from "./components/Footer.vue";
 import AverageError from "./components/AverageError.vue";
 import NumberGrid from "./components/NumberGrid.vue";
 import Question from "./components/Question.vue";
+import ErrorDetail from "./components/ErrorDetail.vue";
+
 export default {
   components: {
     appHeader: Header,
     appFooter: Footer,
     averageError: AverageError,
     numberGrid: NumberGrid,
-    question: Question
+    question: Question,
+    errorDetail: ErrorDetail
   },
   data: function() {
     return {
