@@ -20,7 +20,7 @@ export default {
   methods: {
     clickNumber($event, index) {
       this.$set(this.clicked, index, true);
-      this.$emit("numberDeleted", index);
+      this.$emit("numberClicked", index);
     }
   }
 };

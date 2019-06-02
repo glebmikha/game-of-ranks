@@ -4,7 +4,12 @@
     <new-game class="spacer" @startNewGame="newGame"></new-game>
     <app-progress :numberCount="7" :maxNumbers="12" class="spacer"></app-progress>
     <question :qRank="3" class="spacer"></question>
-    <number-grid :numbers="numbers" :clicked="clicked" class="spacer"></number-grid>
+    <number-grid
+      :numbers="numbers"
+      :clicked="clicked_status"
+      @numberClicked="clickNumber"
+      class="spacer"
+    ></number-grid>
     <average-error class="spacer">14</average-error>
     <error-detail class="spacer"></error-detail>
     <app-footer class="spacer"></app-footer>
@@ -35,21 +40,37 @@ export default {
   data: function() {
     return {
       numbers: "",
-      clicked: "",
-      numbers_param: ""
+      clicked_status: "",
+      numbers_param: "",
+      clicked_index: [],
+      clicked_element: [],
+      error_log: [],
+      sortedNumbers: "",
+      remainingSorterNumber: ""
     };
   },
   methods: {
     newGame(numbers_param) {
       this.numbers_param = numbers_param;
       this.generateNumbers();
+      this.createSortedNumbers();
     },
     generateNumbers() {
       this.numbers = Array.from({ length: this.numbers_param.n_numbers }, () =>
         Math.floor(Math.random() * this.numbers_param.coef)
       );
-      // status if number clicked or not
-      this.clicked = Array(this.numbers_param.n_numbers).fill(false);
+      this.clicked_status = Array(this.numbers_param.n_numbers).fill(false);
+    },
+    clickNumber(index) {
+      if (!this.clicked_index.includes(index)) {
+        this.clicked_index.push(index);
+        this.clicked_element.push(this.numbers[index]);
+      }
+    },
+    createSortedNumbers() {
+      this.sortedNumbers = [...this.numbers];
+      this.sortedNumbers.sort((a, b) => a - b);
+      this.remainingSorterNumber = [...this.sortedNumbers];
     }
   }
 };
