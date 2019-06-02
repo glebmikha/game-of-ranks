@@ -1,28 +1,30 @@
 <template>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Delta</th>
-        <th scope="col">Error</th>
-        <th scope="col">Expected Rank</th>
-        <th scope="col">Expected Number</th>
-        <th scope="col">Recieved Rank</th>
-        <th scope="col">Recieved Element</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(error,index) in errorDetail" :key="index">
-        <th scope="row">{{ index + 1}}</th>
-        <td>{{error.delta}}</td>
-        <td>{{error.error}}%</td>
-        <td>{{error.qRank + 1}}</td>
-        <td>{{error.qElement}}</td>
-        <td>{{error.aRank + 1}}</td>
-        <td>{{error.aElement}}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Delta</th>
+          <th scope="col">Error</th>
+          <th scope="col">Expected Rank</th>
+          <th scope="col">Expected Number</th>
+          <th scope="col">Recieved Rank</th>
+          <th scope="col">Recieved Element</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(error,index) in errorDetail" :key="index">
+          <th scope="row">{{ index + 1}}</th>
+          <td>{{error.delta}}</td>
+          <td>{{error.error}}%</td>
+          <td>{{error.qRank + 1}}</td>
+          <td>{{error.qElement}}</td>
+          <td>{{error.aRank + 1}}</td>
+          <td>{{error.aElement}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
@@ -34,5 +36,9 @@ export default {
 <style scoped>
 span {
   color: red;
+}
+
+table {
+  font-size: 1rem;
 }
 </style>

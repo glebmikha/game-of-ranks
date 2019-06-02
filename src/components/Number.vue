@@ -1,8 +1,10 @@
 <template>
-  <div class="col col-sm-1 col-md-3 col-lg-1 col-xs-3" @click="hit=true">
-    <div class="card card-default text-center" :class="{pushed:hit}">
-      <div class="card-body number">
-        <slot></slot>
+  <div class="col-2 col-lg-1 p-1 p-xl-1 m-0 spacer">
+    <div class="card number">
+      <div class="card-body text-center text-xs-left p-1">
+        <p class="card-text">
+          <slot></slot>
+        </p>
       </div>
     </div>
   </div>
@@ -18,9 +20,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .number {
   cursor: pointer;
+}
+
+.spacer {
+  margin-top: 1rem;
 }
 
 .number:hover {
@@ -29,5 +35,10 @@ export default {
 
 .pushed {
   background-color: #e5e6e8;
+}
+
+.card-text {
+  font-size: 100%;
+  white-space: nowrap;
 }
 </style>
