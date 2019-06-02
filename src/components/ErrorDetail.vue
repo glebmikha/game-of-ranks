@@ -4,8 +4,8 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Delta</th>
-          <th scope="col">Error</th>
+          <th scope="col">Absolute Error</th>
+          <th scope="col">Relative Error</th>
           <th scope="col">Expected Rank</th>
           <th scope="col">Expected Number</th>
           <th scope="col">Recieved Rank</th>
@@ -15,8 +15,8 @@
       <tbody>
         <tr v-for="(error,index) in errorDetail" :key="index">
           <th scope="row">{{ index + 1}}</th>
-          <td>{{error.delta}}</td>
-          <td>{{error.error}}%</td>
+          <td>{{error.absoluteError}}</td>
+          <td>{{error.relativeError.toFixed(0)}}%</td>
           <td>{{error.qRank + 1}}</td>
           <td>{{error.qElement}}</td>
           <td>{{error.aRank + 1}}</td>

@@ -13,14 +13,14 @@ const COEF = 120;
 export default {
   data: function() {
     return {
-      n_numbers: N_NUMBERS,
+      nNumbers: N_NUMBERS,
       coef: COEF
     };
   },
   methods: {
     startNewGame() {
       this.$emit("startNewGame", {
-        n_numbers: this.n_numbers,
+        nNumbers: this.nNumbers,
         coef: this.coef
       });
     }

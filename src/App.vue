@@ -2,23 +2,23 @@
   <div class="container">
     <app-header class="spacer"></app-header>
     <new-game class="spacer" @startNewGame="newGame"></new-game>
-    <app-progress :numberCount="7" :maxNumbers="12" class="spacer"></app-progress>
-    <question :qRank="3" class="spacer"></question>
+    <app-progress :numberCount="clickedIndexes.length" :maxNumbers="numbers.length" class="spacer"></app-progress>
+    <question :qRank="qRank + 1" class="spacer"></question>
     <number-grid
       :numbers="numbers"
-      :clicked="clicked_status"
+      :clicked="clickedStatuses"
       @numberClicked="clickNumber"
       class="spacer"
     ></number-grid>
-    <average-error class="spacer">14</average-error>
-    <error-detail class="spacer"></error-detail>
+    <mean-error class="spacer">{{curMeanRelativeError}}</mean-error>
+    <error-detail class="spacer" :errorDetail="errorLog"></error-detail>
     <app-footer class="spacer"></app-footer>
   </div>
 </template>
 
 <script>
 import Footer from "./components/Footer.vue";
-import AverageError from "./components/AverageError.vue";
+import MeanError from "./components/MeanError.vue";
 import NumberGrid from "./components/NumberGrid.vue";
 import Question from "./components/Question.vue";
 import ErrorDetail from "./components/ErrorDetail.vue";
@@ -30,7 +30,7 @@ export default {
   components: {
     appProgress: Progress,
     appFooter: Footer,
-    averageError: AverageError,
+    meanError: MeanError,
     numberGrid: NumberGrid,
     question: Question,
     errorDetail: ErrorDetail,
@@ -39,38 +39,84 @@ export default {
   },
   data: function() {
     return {
-      numbers: "",
-      clicked_status: "",
-      numbers_param: "",
-      clicked_index: [],
-      clicked_element: [],
-      error_log: [],
+      numbersParams: "",
+      numbers: [],
       sortedNumbers: "",
-      remainingSorterNumber: ""
+      remainingSortedNumbers: "",
+      clickedStatuses: "",
+      clickedIndexes: [],
+      qElement: "",
+      qRank: "",
+      aElement: "",
+      aRank: "",
+      errorLog: [],
+      curMeanRelativeError: "",
+      curRelativeError: 0
     };
   },
   methods: {
-    newGame(numbers_param) {
-      this.numbers_param = numbers_param;
+    newGame(numbersParams) {
+      this.numbersParams = numbersParams;
       this.generateNumbers();
       this.createSortedNumbers();
+      this.nextQuestion();
     },
     generateNumbers() {
-      this.numbers = Array.from({ length: this.numbers_param.n_numbers }, () =>
-        Math.floor(Math.random() * this.numbers_param.coef)
-      );
-      this.clicked_status = Array(this.numbers_param.n_numbers).fill(false);
+      this.numbers = [];
+      while (this.numbers.length < this.numbersParams.nNumbers) {
+        var r = Math.floor(Math.random() * this.numbersParams.coef) + 1;
+        // take only unique
+        if (this.numbers.indexOf(r) === -1) this.numbers.push(r);
+      }
+      this.clickedStatuses = Array(this.numbersParams.nNumbers).fill(false);
     },
     clickNumber(index) {
-      if (!this.clicked_index.includes(index)) {
-        this.clicked_index.push(index);
-        this.clicked_element.push(this.numbers[index]);
+      if (!this.clickedIndexes.includes(index)) {
+        // get user answer
+        this.aElement = this.numbers[index];
+        this.aRank = this.sortedNumbers.indexOf(this.aElement);
+
+        this.clickedIndexes.push(index);
+
+        // calculate errors
+
+        this.curRelativeError =
+          (Math.abs(this.qRank - this.aRank) * 100) / this.sortedNumbers.length;
+
+        let logLine = {
+          absoluteError: this.qRank - this.aRank,
+          relativeError: this.curRelativeError,
+          qRank: this.qRank,
+          qElement: this.qElement,
+          aRank: this.aRank,
+          aElement: this.aElement
+        };
+
+        this.errorLog.push(logLine);
+
+        // get current mean relative error
+        let errors = this.errorLog.map(a => a.relativeError);
+        const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
+        this.curMeanRelativeError = average(errors).toFixed(0);
+
+        // delete element from sorted numbers
+        var i = this.remainingSortedNumbers.indexOf(this.aElement);
+        if (i !== -1) this.remainingSortedNumbers.splice(i, 1);
+
+        this.nextQuestion();
       }
     },
     createSortedNumbers() {
       this.sortedNumbers = [...this.numbers];
       this.sortedNumbers.sort((a, b) => a - b);
-      this.remainingSorterNumber = [...this.sortedNumbers];
+      this.remainingSortedNumbers = [...this.sortedNumbers];
+    },
+    nextQuestion() {
+      this.qElement = this.remainingSortedNumbers[
+        Math.floor(Math.random() * this.remainingSortedNumbers.length)
+      ];
+
+      this.qRank = this.sortedNumbers.indexOf(this.qElement);
     }
   }
 };
