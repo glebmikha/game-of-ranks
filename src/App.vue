@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <app-header class="spacer"></app-header>
-    <new-game class="spacer"></new-game>
+    <new-game class="spacer" @startNewGame="newGame"></new-game>
     <app-progress :numberCount="7" :maxNumbers="12" class="spacer"></app-progress>
     <question :qRank="3" class="spacer"></question>
-    <number-grid :numbers="numbers" class="spacer"></number-grid>
+    <number-grid :numbers="numbers" :clicked="clicked" class="spacer"></number-grid>
     <average-error class="spacer">14</average-error>
     <error-detail class="spacer"></error-detail>
     <app-footer class="spacer"></app-footer>
@@ -34,33 +34,23 @@ export default {
   },
   data: function() {
     return {
-      numbers: [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        123,
-        1100,
-        11,
-        12,
-        1,
-        2,
-        9999,
-        4,
-        97087,
-        6,
-        7,
-        8,
-        123,
-        1100,
-        11,
-        12
-      ]
+      numbers: "",
+      clicked: "",
+      numbers_param: ""
     };
+  },
+  methods: {
+    newGame(numbers_param) {
+      this.numbers_param = numbers_param;
+      this.generateNumbers();
+    },
+    generateNumbers() {
+      this.numbers = Array.from({ length: this.numbers_param.n_numbers }, () =>
+        Math.floor(Math.random() * this.numbers_param.coef)
+      );
+      // status if number clicked or not
+      this.clicked = Array(this.numbers_param.n_numbers).fill(false);
+    }
   }
 };
 </script>
