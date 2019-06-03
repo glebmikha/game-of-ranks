@@ -3,7 +3,7 @@
     <app-header class="spacer"></app-header>
     <new-game class="spacer" @startNewGame="newGame"></new-game>
     <app-progress :numberCount="clickedIndexes.length" :maxNumbers="numbers.length" class="spacer"></app-progress>
-    <question :qRank="qRank + 1" class="spacer"></question>
+    <question :qRank="qRank + 1" class="spacer" v-if="remainingSortedNumbers.length > 0"></question>
     <number-grid
       :numbers="numbers"
       :clicked="clickedStatuses"
@@ -42,7 +42,7 @@ export default {
       numbersParams: "",
       numbers: [],
       sortedNumbers: "",
-      remainingSortedNumbers: "",
+      remainingSortedNumbers: [],
       clickedStatuses: "",
       clickedIndexes: [],
       qElement: "",
@@ -50,13 +50,15 @@ export default {
       aElement: "",
       aRank: "",
       errorLog: [],
-      curMeanRelativeError: "",
+      curMeanRelativeError: 0,
       curRelativeError: 0
     };
   },
   methods: {
     newGame(numbersParams) {
       this.numbersParams = numbersParams;
+      this.clickedIndexes = [];
+      this.errorLog = [];
       this.generateNumbers();
       this.createSortedNumbers();
       this.nextQuestion();

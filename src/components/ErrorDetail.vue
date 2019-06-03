@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive">
-    <table class="table">
+    <table class="table table-sm">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -38,7 +38,9 @@ span {
   color: red;
 }
 
-table {
-  font-size: 1rem;
+@media only screen and (max-width: 600px) {
+  table {
+    font-size: 0.2rem;
+  }
 }
 </style>

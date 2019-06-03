@@ -1,10 +1,10 @@
 <template>
   <div class="row">
     <div class="col-sm-8 offset-sm-2 col-xs-12 col-md-6 offset-md-3 text-center">
-      <h1>
+      <h3>
         Find element with rank
         <span>{{ qRank }}</span>
-      </h1>
+      </h3>
     </div>
   </div>
 </template>
