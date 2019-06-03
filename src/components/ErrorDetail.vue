@@ -37,10 +37,4 @@ export default {
 span {
   color: red;
 }
-
-@media only screen and (max-width: 600px) {
-  table {
-    font-size: 0.2rem;
-  }
-}
 </style>
