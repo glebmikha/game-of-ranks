@@ -10,7 +10,7 @@
       @numberClicked="clickNumber"
       class="spacer"
     ></number-grid>
-    <mean-error class="spacer">{{curMeanRelativeError}}</mean-error>
+    <mean-error class="spacer">{{ this.cntCorrect }} / {{ clickedIndexes.length }}</mean-error>
     <error-detail class="spacer" :errorDetail="errorLog" :nClicked="clickedIndexes.length"></error-detail>
     <app-footer class="spacer"></app-footer>
   </div>
@@ -51,7 +51,8 @@ export default {
       errorLog: [],
       curMeanRelativeError: 0,
       curRelativeError: 0,
-      numbersStyles: ""
+      numbersStyles: "",
+      cntCorrect: 0
     };
   },
   methods: {
@@ -59,6 +60,7 @@ export default {
       this.numbersParams = numbersParams;
       this.clickedIndexes = [];
       this.errorLog = [];
+      this.cntCorrect = 0;
       this.generateNumbers();
       this.createSortedNumbers();
       this.nextQuestion();
@@ -71,7 +73,7 @@ export default {
         if (this.numbers.indexOf(r) === -1) this.numbers.push(r);
       }
       // make array with styles
-      this.numbersStyles = Array(this.numbersParams.nNumbers).fill("UNCLIKED");
+      this.numbersStyles = Array(this.numbersParams.nNumbers).fill("UNCLICKED");
     },
     clickNumber(index) {
       if (!this.clickedIndexes.includes(index)) {
@@ -110,6 +112,10 @@ export default {
         } else {
           this.$set(this.numbersStyles, index, "OK");
         }
+
+        // calculate correct answers
+
+        this.cntCorrect = this.numbersStyles.filter(x => x === "OK").length;
 
         // delete element from sorted numbers
         var i = this.remainingSortedNumbers.indexOf(this.aElement);

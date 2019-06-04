@@ -1,6 +1,9 @@
 <template>
   <div class="col-2 col-lg-1 p-1 p-xl-1 m-0 spacer">
-    <div class="card number" :class="{ error: numStyle === 'ERROR', success: numStyle === 'OK' }">
+    <div
+      class="card"
+      :class="{ error: numStyle === 'ERROR', success: numStyle === 'OK', number: numStyle === 'UNCLICKED' }"
+    >
       <div class="card-body text-center text-xs-left p-1">
         <p class="card-text">
           <slot></slot>
@@ -40,5 +43,13 @@ export default {
 
 .success {
   background-color: lightgreen;
+}
+
+.error:hover {
+  cursor: default;
+}
+
+.success:hover {
+  cursor: default;
 }
 </style>

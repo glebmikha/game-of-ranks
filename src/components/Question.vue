@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-8 offset-sm-2 col-xs-12 col-md-6 offset-md-3 text-center">
       <h3>
-        Find element with rank
+        Find element of rank
         <span>{{ qRank }}</span>
       </h3>
     </div>

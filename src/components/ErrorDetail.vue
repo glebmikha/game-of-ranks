@@ -4,22 +4,22 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Absolute Error</th>
-          <th scope="col">Relative Error</th>
+          <!-- <th scope="col">Absolute Error</th>
+          <th scope="col">Relative Error</th>-->
           <th scope="col">Expected Rank</th>
-          <th scope="col">Expected Number</th>
           <th scope="col">Recieved Rank</th>
+          <th scope="col">Expected Element</th>
           <th scope="col">Recieved Element</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(error,index) in errorDetail" :key="index">
           <th scope="row">{{nClicked - index}}</th>
-          <td>{{error.absoluteError}}</td>
-          <td>{{error.relativeError.toFixed(0)}}%</td>
+          <!-- <td>{{error.absoluteError}}</td>
+          <td>{{error.relativeError.toFixed(0)}}%</td>-->
           <td>{{error.qRank + 1}}</td>
-          <td>{{error.qElement}}</td>
           <td>{{error.aRank + 1}}</td>
+          <td>{{error.qElement}}</td>
           <td>{{error.aElement}}</td>
         </tr>
       </tbody>
