@@ -3,7 +3,7 @@
     <app-number
       v-for="(number, index) in numbers"
       :key="index"
-      :clicked="clicked[index]"
+      :numStyle="numStyles[index]"
       @click.native="clickNumber($event, index)"
     >{{ number }}</app-number>
   </div>
@@ -13,13 +13,12 @@
 import Number from "./Number.vue";
 
 export default {
-  props: ["numbers", "clicked"],
+  props: ["numbers", "numStyles"],
   components: {
     appNumber: Number
   },
   methods: {
     clickNumber($event, index) {
-      this.$set(this.clicked, index, true);
       this.$emit("numberClicked", index);
     }
   }

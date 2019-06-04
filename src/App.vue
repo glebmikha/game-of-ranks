@@ -6,7 +6,7 @@
     <question :qRank="qRank + 1" class="spacer" v-if="remainingSortedNumbers.length > 0"></question>
     <number-grid
       :numbers="numbers"
-      :clicked="clickedStatuses"
+      :numStyles="numbersStyles"
       @numberClicked="clickNumber"
       class="spacer"
     ></number-grid>
@@ -43,7 +43,6 @@ export default {
       numbers: [],
       sortedNumbers: "",
       remainingSortedNumbers: [],
-      clickedStatuses: "",
       clickedIndexes: [],
       qElement: "",
       qRank: "",
@@ -51,7 +50,8 @@ export default {
       aRank: "",
       errorLog: [],
       curMeanRelativeError: 0,
-      curRelativeError: 0
+      curRelativeError: 0,
+      numbersStyles: ""
     };
   },
   methods: {
@@ -70,7 +70,8 @@ export default {
         // take only unique
         if (this.numbers.indexOf(r) === -1) this.numbers.push(r);
       }
-      this.clickedStatuses = Array(this.numbersParams.nNumbers).fill(false);
+      // make array with styles
+      this.numbersStyles = Array(this.numbersParams.nNumbers).fill("UNCLIKED");
     },
     clickNumber(index) {
       if (!this.clickedIndexes.includes(index)) {
@@ -98,8 +99,17 @@ export default {
 
         // get current mean relative error
         let errors = this.errorLog.map(a => a.relativeError);
+        this.errors = errors;
         const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
         this.curMeanRelativeError = average(errors).toFixed(0);
+
+        // set style for cliked number
+
+        if (this.curRelativeError > 0) {
+          this.$set(this.numbersStyles, index, "ERROR");
+        } else {
+          this.$set(this.numbersStyles, index, "OK");
+        }
 
         // delete element from sorted numbers
         var i = this.remainingSortedNumbers.indexOf(this.aElement);
