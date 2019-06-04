@@ -11,7 +11,7 @@
       class="spacer"
     ></number-grid>
     <mean-error class="spacer">{{curMeanRelativeError}}</mean-error>
-    <error-detail class="spacer" :errorDetail="errorLog"></error-detail>
+    <error-detail class="spacer" :errorDetail="errorLog" :nClicked="clickedIndexes.length"></error-detail>
     <app-footer class="spacer"></app-footer>
   </div>
 </template>
@@ -94,7 +94,7 @@ export default {
           aElement: this.aElement
         };
 
-        this.errorLog.push(logLine);
+        this.errorLog.unshift(logLine);
 
         // get current mean relative error
         let errors = this.errorLog.map(a => a.relativeError);

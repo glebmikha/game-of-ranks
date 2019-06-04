@@ -14,7 +14,7 @@
       </thead>
       <tbody>
         <tr v-for="(error,index) in errorDetail" :key="index">
-          <th scope="row">{{ index + 1}}</th>
+          <th scope="row">{{nClicked - index}}</th>
           <td>{{error.absoluteError}}</td>
           <td>{{error.relativeError.toFixed(0)}}%</td>
           <td>{{error.qRank + 1}}</td>
@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  props: ["errorDetail"]
+  props: ["errorDetail", "nClicked"]
 };
 </script>
 
